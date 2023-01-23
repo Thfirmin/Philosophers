@@ -6,25 +6,31 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 04:47:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/01/20 04:47:07 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/01/22 16:03:40 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # +>                                     NAME 
 
-
+NAME	= philo
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     PATH 
 
-
+PTH_SRC	= ./
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    SOURCE 
 
+SRC_MAIN	= philosophers.c \
+			  philo_getinstant.c
 
+SRCS	= $(addprefix $(PTH_SRC),$(SRC_MAIN))
+
+OBJS	= $(SRCS:.c=.o)
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                    ALIASES 
 
-
+CC	= cc
+CFLAGS	= -Wall -Wextra -Werror -pthread
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     CODES 
 
@@ -50,13 +56,27 @@ FULLER			= \e[7m
 # <+-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-' #
 # +>                                     RULES 
 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+
 all:		$(NAME)
 
-$(NAME):
+$(NAME):	$(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) 
+
+debug:	CFLAGS += -g -fsanitize=address
+
+debug:	re
 
 clean:
+ifneq (,$(shell ls $(OBJS) 2> /dev/null))
+	rm -rf $(OBJS)
+endif
 
 fclean:		clean
+ifneq (,$(shell ls $(NAME) 2> /dev/null))
+	rm -rf $(NAME)
+endif
 
 re:			fclean all
 

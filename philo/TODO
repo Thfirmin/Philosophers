@@ -1,0 +1,8 @@
+Philosophers TODO
+
+| Step | Description |
+|:-----|:------------|
+| Inicialização | Iniciar filosofos e informações |
+| Corres | O programa inicia com os filosofos disputando o garfo |
+| Anti-furto | Validar a certeza de que o garfo não será dupllicado |
+|  |  |
