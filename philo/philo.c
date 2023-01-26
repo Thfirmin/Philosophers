@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 15:27:15 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/26 08:53:46 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:37:24 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ int	main(int argc, char *argv[])
 		return (2);
 	}
 	law = philo_initlaw(argc, argv);
-	//philo = philo_initphilo(&law);
+	if (!law)
+		return (2);
+	philo = philo_initphilo(&law);
+	if (!philo)
+		return (2);
+	philo_join(philo, &law);
 	return (0);
 }
 

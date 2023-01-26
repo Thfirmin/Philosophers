@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 08:31:43 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/26 08:34:46 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:32:12 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	*philo_routine(void	*data)
 {
-	(void)data
+	t_law	*law;
+
+	law = data;
+	(void)law
 	return (0);
 }
