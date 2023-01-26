@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_getinstant.c                                 :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/22 15:20:55 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/25 16:51:43 by thfirmin         ###   ########.fr       */
+/*   Created: 2023/01/26 08:31:43 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/01/26 08:34:46 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// gettimeofday in milisenconds
-long int	philo_getinstant(void)
+void	*philo_routine(void	*data)
 {
-	struct timeval	tv;
-
-	gettimeofday(&tv, 0);
-	return ((tv.tv_sec * 1000000) + tv.tv_usec);
+	(void)data
+	return (0);
 }

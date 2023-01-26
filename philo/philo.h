@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 15:16:04 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/22 18:55:44 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/26 08:46:49 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILO_H
+# define PHILO_H
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdio.h>
@@ -22,21 +22,32 @@
 // Structs
 typedef struct	s_philo
 {
-	pthread_t	thrd_id;
-	int			thrd_nb;
-	int			time_to_eat;
-	int			time_to_die;
-
+	pthread_t	philo_id;
+	int			philo_nb;
+	int			eat_nb;
+	int			eat;
+	int			die;
+	int			sleep;
 }				t_philo;
 
-typedef struct	s_row
+typedef struct	s_law
 {
-	int	time_to_eat;
-	int	time_to_die;
-	int	time_to_sleep;
-	int	eat_times;
-}		s_row;
+	int		philo_nbr;
+	int		t_eat;
+	int		t_die;
+	int		t_sleep;
+	int		eat_nbr;
+	char	*forks;
+}		t_law;
 
+// Utils
+void		philo_putstr_fd(char *str, int fd);
+t_law		philo_initlaw(int argc, char *argv[]);
+int			philo_atoi(char	*ascii);
+int			philo_strlen(char *str);
+
+// Main
+void		*philo_routine(void	*data);
 long int	philo_getinstant(void);
 
 #endif
