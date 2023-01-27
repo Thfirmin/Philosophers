@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 08:31:43 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/26 16:32:12 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:18:00 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	*philo_routine(void	*data)
 {
-	t_law	*law;
+	t_philo	*philo;
 
-	law = data;
-	(void)law
+	philo = data;
+	printf ("Log in from philosopher %d\n", philo->nb);
+	printf ("Log out from philosopher %d\n", philo->nb);
 	return (0);
 }

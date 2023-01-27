@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 15:16:04 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/26 16:38:20 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:40:57 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@
 # include <string.h>
 
 // Structs
-typedef struct	s_philo
-{
-	pthread_t	id;
-	int			nb;
-	int			eat_nb;
-	int			eat;
-	int			die;
-	int			sleep;
-}				t_philo;
-
 typedef struct	s_law
 {
 	int		philo_nbr;
@@ -40,15 +30,27 @@ typedef struct	s_law
 	char	*forks;
 }		t_law;
 
+typedef struct	s_philo
+{
+	pthread_t	id;
+	int			nb;
+	int			eat_nb;
+	int			eat;
+	int			die;
+	int			sleep;
+	t_law		*law;
+}				t_philo;
+
 // Str Utils
 void		philo_putstr_fd(char *str, int fd);
 int			philo_atoi(char	*ascii);
 int			philo_strlen(char *str);
 
 // Struct Utils
-void		philo_join(t_philo *philo, t_law *law)
+void		philo_join(t_philo *philo, t_law *law);
 t_philo		*philo_initphilo(t_law *law);
-t_law		philo_initlaw(int argc, char *argv[]);
+t_law		*philo_initlaw(int argc, char *argv[]);
+void		philo_clean_data(t_law *law, t_philo *philo);
 
 
 // Main

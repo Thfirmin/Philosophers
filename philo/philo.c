@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 15:27:15 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/26 16:37:24 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:58:11 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,41 @@ static int	philo_isvalid_arg(int argc, char *argv[]);
 
 int	main(int argc, char *argv[])
 {
-	t_law	law;
+	t_law	*law;
 	t_philo	*philo;
 
-	(void) philo;
 	if(!philo_isvalid_arg(argc, argv))
 	{
 		philo_err_message();
 		return (2);
 	}
 	law = philo_initlaw(argc, argv);
-	if (!law)
+	if (!law || !law->forks)
+	{
+		philo_clean_data(law, 0);
 		return (2);
-	philo = philo_initphilo(&law);
+	}
+	philo = philo_initphilo(law);
 	if (!philo)
+	{
+		philo_clean_data(law, 0);
 		return (2);
-	philo_join(philo, &law);
+	}
+	philo_join(philo, law);
 	return (0);
 }
 
 static int	philo_isvalid_arg(int argc, char *argv[])
 {
+	int	i;
+
+	av = argv;
 	if ((argc < 4) || (argc > 5))
 		return (0);
-	argv++;
-	while (*argv)
+	i = 1;
+	while (*(argv + i))
 	{
-		if ((**argv == '-') || (**argv == '+'))
+		if ((*(*argv) == '-') || (*(*argv) == '+'))
 			if (*(*argv)++ == '-')
 				return (0);
 		while (**argv)
@@ -53,7 +61,7 @@ static int	philo_isvalid_arg(int argc, char *argv[])
 				return (0);
 			*argv += 1;
 		}
-		argv++;
+		i++;
 	}
 	return (1);
 }

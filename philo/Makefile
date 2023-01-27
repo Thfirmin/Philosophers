@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 04:47:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/01/26 03:42:53 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/01/27 16:13:50 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ PTH_SRC	= ./
 SRC_MAIN	= philo.c \
 			  philo_getinstant.c \
 			  philo_strutils.c \
-			  philo_structutils.c
+			  philo_structutils.c \
+			  philo_routine.c
 
 SRCS	= $(addprefix $(PTH_SRC),$(SRC_MAIN))
 
