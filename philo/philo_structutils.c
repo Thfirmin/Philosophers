@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 03:41:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/27 16:52:00 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/28 03:23:02 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_law	*philo_initlaw(int argc, char *argv[])
 	law = malloc (sizeof(t_law));
 	if (!law)
 		return (0);
+	law->sim = 1;
+	pthread_mutex_init(&law->s_mtx, 0);
 	law->philo_nbr = philo_atoi(argv[1]);
 	law->t_eat = philo_atoi(argv[3]);
 	law->t_die = philo_atoi(argv[2]);
@@ -28,12 +30,11 @@ t_law	*philo_initlaw(int argc, char *argv[])
 		law->eat_nbr = philo_atoi(argv[5]);
 	else
 		law->eat_nbr = -1;
-	law->forks = malloc(law->philo_nbr);
-	if (!law->forks)
+	law->fork = malloc(sizeof(pthread_mutex_t) * law->philo_nbr);
+	if (!law->fork)
 			return (law);
-	while (++i <= law->philo_nbr)
-		*(law->forks + i) = '\0';
-	printf ("nbr: %d\nt_die: %d\nt_eat: %d\nt_sleep: %d\nnbr_time: %d\n", law->philo_nbr, law->t_die, law->t_eat, law->t_sleep, law->eat_nbr);
+	while (++i < law->philo_nbr)
+		pthread_mutex_init((law->fork + i), 0);
 	return (law);
 }
 
@@ -46,21 +47,28 @@ t_philo	*philo_initphilo(t_law *law)
 	if (!philo)
 		return (0);
 	i = -1;
+	law->instant = philo_getinstant();
 	while (++i < law->philo_nbr)
 	{
 		philo[i].nb = i + 1;
-		philo[i].eat = 0;
+		philo[i].life = (philo_getinstant() / 1000);
 		philo[i].die = 0;
-		philo[i].sleep = 0;
 		philo[i].eat_nb = law->eat_nbr;
 		philo[i].law = law;
 		pthread_create(&philo[i].id, NULL, philo_routine, &philo[i]);
-		printf ("created philosopher %d\n", i);
 	}
-	printf ("i: %d < philo_nbr: %d\n", i, law->philo_nbr);
 	return (philo);
 }
 
+void	philo_detach(t_philo *philo, t_law *law)
+{
+	int	i;
+
+	i = -1;
+	while (++i < law->philo_nbr)
+		pthread_detach(philo[i].id);
+	philo_clean_data(law, philo);
+}
 
 void	philo_join(t_philo *philo, t_law *law)
 {
@@ -74,9 +82,16 @@ void	philo_join(t_philo *philo, t_law *law)
 
 void	philo_clean_data(t_law *law, t_philo *philo)
 {
+	int	i;
+
+	i = -1;
 	if (law)
 	{
-		free(law->forks);
+		pthread_mutex_destroy(&law->s_mtx);
+		if (law->fork)
+			while (++i < law->philo_nbr)
+				pthread_mutex_destroy(&law->fork[i]);
+		free(law->fork);
 		free(law);
 	}
 	if (philo)

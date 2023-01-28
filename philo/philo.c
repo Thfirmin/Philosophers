@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 15:27:15 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/27 16:58:11 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/28 03:29:35 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	philo_err_message(void);
 
 static int	philo_isvalid_arg(int argc, char *argv[]);
+
+static void	run_monitor(t_philo *philo, t_law *law);
 
 int	main(int argc, char *argv[])
 {
@@ -27,7 +29,7 @@ int	main(int argc, char *argv[])
 		return (2);
 	}
 	law = philo_initlaw(argc, argv);
-	if (!law || !law->forks)
+	if (!law || !law->fork)
 	{
 		philo_clean_data(law, 0);
 		return (2);
@@ -38,30 +40,50 @@ int	main(int argc, char *argv[])
 		philo_clean_data(law, 0);
 		return (2);
 	}
+	run_monitor(philo, law);
 	philo_join(philo, law);
 	return (0);
+}
+
+static void	run_monitor(t_philo *philo, t_law *law)
+{
+	int	i;
+
+	while (law->sim)
+	{
+		i = -1;
+		while (++i < law->philo_nbr)
+		{
+			if (philo[i].die)
+			{
+				law->sim = 0;
+				break;
+			}
+		}
+	}
 }
 
 static int	philo_isvalid_arg(int argc, char *argv[])
 {
 	int	i;
+	char	*av;
 
-	av = argv;
 	if ((argc < 4) || (argc > 5))
 		return (0);
 	i = 1;
-	while (*(argv + i))
+	av = *(argv + i);
+	while (av)
 	{
-		if ((*(*argv) == '-') || (*(*argv) == '+'))
-			if (*(*argv)++ == '-')
+		if ((*av == '-') || (*av == '+'))
+			if (*av++ == '-')
 				return (0);
-		while (**argv)
+		while (*av)
 		{
-			if (!((**argv >= '0') && (**argv <= '9')))
+			if (!((*av >= '0') && (*av <= '9')))
 				return (0);
-			*argv += 1;
+			av += 1;
 		}
-		i++;
+		av = *(argv + ++i);
 	}
 	return (1);
 }
