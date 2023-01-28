@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 03:41:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/28 03:23:02 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/28 03:58:47 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,6 @@ t_philo	*philo_initphilo(t_law *law)
 		pthread_create(&philo[i].id, NULL, philo_routine, &philo[i]);
 	}
 	return (philo);
-}
-
-void	philo_detach(t_philo *philo, t_law *law)
-{
-	int	i;
-
-	i = -1;
-	while (++i < law->philo_nbr)
-		pthread_detach(philo[i].id);
-	philo_clean_data(law, philo);
 }
 
 void	philo_join(t_philo *philo, t_law *law)

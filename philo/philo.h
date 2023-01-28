@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 15:16:04 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/28 03:22:25 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/28 03:58:28 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void		philo_messagestamp(t_philo *philo, short mode, int life);
 
 // Struct Utils
 void		philo_join(t_philo *philo, t_law *law);
-void		philo_detach(t_philo *philo, t_law *law);
 t_philo		*philo_initphilo(t_law *law);
 t_law		*philo_initlaw(int argc, char *argv[]);
 void		philo_clean_data(t_law *law, t_philo *philo);
