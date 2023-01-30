@@ -5,59 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/22 15:27:15 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/28 03:29:35 by thfirmin         ###   ########.fr       */
+/*   Created: 2023/01/28 20:33:02 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/01/30 04:03:26 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	philo_err_message(void);
-
 static int	philo_isvalid_arg(int argc, char *argv[]);
 
-static void	run_monitor(t_philo *philo, t_law *law);
+static void	philo_sim_monitoring(t_philo *philo, t_data *data);
 
 int	main(int argc, char *argv[])
 {
-	t_law	*law;
+	t_data	*data;
 	t_philo	*philo;
 
-	if(!philo_isvalid_arg(argc, argv))
-	{
-		philo_err_message();
+	if (!philo_isvalid_arg(argc, argv))
 		return (2);
-	}
-	law = philo_initlaw(argc, argv);
-	if (!law || !law->fork)
-	{
-		philo_clean_data(law, 0);
+	data = philo_datainit(argc, argv);
+	if (!philo_datacheck(data))
 		return (2);
-	}
-	philo = philo_initphilo(law);
-	if (!philo)
-	{
-		philo_clean_data(law, 0);
+	philo = philo_philoinit(data);
+	if (!philo_philocheck(philo))
 		return (2);
-	}
-	run_monitor(philo, law);
-	philo_join(philo, law);
+	philo_sim_monitoring(philo, data);
+	philo_philoclean(philo, data);
+	philo_dataclean(data);
 	return (0);
 }
 
-static void	run_monitor(t_philo *philo, t_law *law)
+static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 {
-	int	i;
+	int					i;
+	unsigned long int	time;
 
-	while (law->sim)
+	while (data->sim)
 	{
 		i = -1;
-		while (++i < law->philo_nbr)
+		while (++i < data->n_philo)
 		{
-			if (philo[i].die)
+			time = (philo_getinst() / 1000);
+			if ((time - (philo + i)->t_life) >= data->t_die)
 			{
-				law->sim = 0;
-				break;
+				(philo + i)->stat[M_DIE] = 1;
+				pthread_mutex_lock(data->s_mtx);
+				data->sim = 0;
+				pthread_mutex_unlock(data->s_mtx);
+				break ;
 			}
 		}
 	}
@@ -65,31 +60,21 @@ static void	run_monitor(t_philo *philo, t_law *law)
 
 static int	philo_isvalid_arg(int argc, char *argv[])
 {
-	int	i;
-	char	*av;
+	int		i;
 
 	if ((argc < 4) || (argc > 5))
-		return (0);
-	i = 1;
-	av = *(argv + i);
-	while (av)
 	{
-		if ((*av == '-') || (*av == '+'))
-			if (*av++ == '-')
-				return (0);
-		while (*av)
+		philo_stamperr(0);
+		return (0);
+	}
+	i = 0;
+	while (*(argv + ++i))
+	{
+		if (!philo_isposnumber(*(argv + i)))
 		{
-			if (!((*av >= '0') && (*av <= '9')))
-				return (0);
-			av += 1;
+			philo_stamperr("Error: Use just positive decimal number");
+			return (0);
 		}
-		av = *(argv + ++i);
 	}
 	return (1);
-}
-
-static void	philo_err_message(void)
-{
-	philo_putstr_fd("Usage: ./philo <philos_nbr> <t_die> <t_eat> ", 2);
-	philo_putstr_fd("<t_sleep> [nbr_time_philos_to_eat]\n", 2);
 }

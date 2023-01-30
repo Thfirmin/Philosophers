@@ -3,116 +3,133 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
+/*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 08:31:43 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/28 03:37:41 by thfirmin         ###   ########.fr       */
+/*   Created: 2023/01/30 02:15:35 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/01/30 04:26:32 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	philo_die(t_philo *philo);
+void	philo_die(t_philo *philo);
 
-static void	philo_dropfork(t_philo *philo, int life);
+void	philo_drop_fork(t_philo *philo, int *life);
 
-static void	philo_takefork(t_philo *philo, int life);
+void	philo_taketwo_fork(t_philo *philo, int *life);
 
-static int	philo_usleep(t_philo *philo, unsigned long int time, int life);
+void	philo_takeone_fork(t_philo *philo, int *life);
 
-void	*philo_routine(void	*data)
+void	*philo_routine(void *param)
 {
 	t_philo	*philo;
 	int		life;
 
-	philo = data;
+	philo = param;
 	life = 1;
-	while(life && philo->law->sim)
+	while (life && !philo->stat[M_DIE] && philo->data->sim)
 	{
-			philo_takefork(philo, life);
-			philo_messagestamp(philo, M_EAT, life);
-			life = philo_usleep(philo, philo->law->t_eat, life);
-			philo_dropfork(philo, life);
-			philo_messagestamp(philo, M_SLEEP, life);
-			life = philo_usleep(philo, philo->law->t_sleep, life);
-			philo_messagestamp(philo, M_THINK, life);
-			life = philo_usleep(philo, PHILO_THINK, life);
+		philo_takeone_fork(philo, &life);
+		philo_taketwo_fork(philo, &life);
+		philo_eat(philo, &life);
+		philo_drop_fork(philo, &life);
+		philo_sleep(philo, &life);
+		philo_think(philo, &life);
+		if (philo->data->n_philo < 2)
+			life = philo_usleep(philo, philo->data->t_die, life);
 	}
-	pthread_mutex_lock(&philo->law->s_mtx);
-	if (philo->law->sim)
+	if (!life || philo->stat[M_DIE])
 		philo_die(philo);
-	pthread_mutex_unlock(&philo->law->s_mtx);
 	return (0);
 }
 
-static int	philo_usleep(t_philo *philo, unsigned long int time, int life)
+void	philo_takeone_fork(t_philo *philo, int *life)
 {
-	unsigned long int	init;
-	unsigned long int	inst;
+	int					p_nbr;
+	unsigned long int	time;
 
-	if (!life && !philo->law->sim)
-		return (0);
-	init = (philo_getinstant() / 1000);
-	inst = init;
-	while ((inst - init) < time)
-	{
-		inst = (philo_getinstant() / 1000);
-		if ((inst - philo->life) >= philo->law->t_die)
-			return (0);
-	}
-	return (1);
-}
-
-static void	philo_takefork(t_philo *philo, int life)
-{
-	int	philo_nbr;
-	int	philo_id;
-
-	if (!life && !philo->law->sim)
+	if (philo->stat[M_DIE])
 		return ;
-	philo_nbr = philo->law->philo_nbr;
-	philo_id = philo->nb;
-	if (philo_id % 2)
+	if (!*life || !philo->data->sim)
+		return ;
+	if (!philo->stat[M_THINK])
+		return ;
+	p_nbr = philo->data->n_philo;
+	if (philo->nb % 2)
 	{
-		pthread_mutex_lock(&philo->law->fork[philo_id % philo_nbr]);
-		philo_messagestamp(philo, M_FORK, life);
-		pthread_mutex_lock(&philo->law->fork[philo_id - 1]);
-		philo_messagestamp(philo, M_FORK, life);
+		pthread_mutex_lock(&philo->data->fork[philo->nb % p_nbr]);
+		philo_stampmod(philo, M_FORK, *life);
+		printf ("forks: %d\n", philo->stat[M_FORK]);
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->law->fork[philo_id - 1]);
-		philo_messagestamp(philo, M_FORK, life);
-		pthread_mutex_lock(&philo->law->fork[philo_id % philo_nbr]);
-		philo_messagestamp(philo, M_FORK, life);
+		pthread_mutex_lock(&philo->data->fork[philo->nb - 1]);
+		philo_stampmod(philo, M_FORK, *life);
 	}
-	philo->life = (philo_getinstant() / 1000);
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		*life = 0;
 }
 
-static void	philo_dropfork(t_philo *philo, int life)
+void	philo_taketwo_fork(t_philo *philo, int *life)
 {
-	int	philo_nbr;
-	int	philo_id;
+	int					p_nbr;
+	unsigned long int	time;
 
-	if (!life && !philo->law->sim)
+	if (philo->stat[M_DIE])
 		return ;
-	philo_nbr = philo->law->philo_nbr;
-	philo_id = philo->nb;
-	if (philo_id % 2)
+	if (!*life || !philo->data->sim)
+		return ;
+	if (!philo->stat[M_FORK])
+		return ;
+	p_nbr = philo->data->n_philo;
+	if (philo->nb % 2)
 	{
-		pthread_mutex_unlock(&philo->law->fork[philo_id % philo_nbr]);
-		pthread_mutex_unlock(&philo->law->fork[philo_id - 1]);
+		pthread_mutex_lock(&philo->data->fork[philo->nb - 1]);
+		philo_stampmod(philo, M_FORK, *life);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philo->law->fork[philo_id - 1]);
-		pthread_mutex_unlock(&philo->law->fork[philo_id % philo_nbr]);
+		pthread_mutex_lock(&philo->data->fork[philo->nb % p_nbr]);
+		philo_stampmod(philo, M_FORK, *life);
 	}
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		*life = 0;
 }
 
-static void	philo_die(t_philo *philo)
+void	philo_drop_fork(t_philo *philo, int *life)
 {
-	philo->die = 1;
-	philo_messagestamp(philo, M_DIE, 0);
-	philo->law->sim = 0;
+	int					p_nbr;
+	unsigned long int	time;
+
+	if (philo->stat[M_DIE])
+		return ;
+	if (!*life || !philo->data->sim)
+		return ;
+	if (!philo->stat[M_EAT])
+		return ;
+	p_nbr = philo->data->n_philo;
+	if (philo->nb % 2)
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->nb % p_nbr]);
+		pthread_mutex_unlock(&philo->data->fork[philo->nb - 1]);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->nb - 1]);
+		pthread_mutex_unlock(&philo->data->fork[philo->nb % p_nbr]);
+	}
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		*life = 0;
+}
+
+void	philo_die(t_philo *philo)
+{
+	philo_stampmod(philo, M_DIE, 0);
+	pthread_mutex_lock(philo->data->s_mtx);
+	if (philo->data->sim)
+		philo->data->sim = 0;
+	pthread_mutex_unlock(philo->data->s_mtx);
 }

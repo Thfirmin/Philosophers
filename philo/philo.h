@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/22 15:16:04 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/28 03:58:28 by thfirmin         ###   ########.fr       */
+/*   Created: 2023/01/28 20:31:58 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/01/30 04:11:43 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,58 +21,73 @@
 # include <stdlib.h>
 # include <string.h>
 
-// Defines
-# ifndef PHILO_CONSTS
-#  define PHILO_CONSTS
-#  define PHILO_THINK 150
-#  define M_FORK 1
-#  define M_EAT 2
-#  define M_SLEEP 3
-#  define M_THINK 4
-#  define M_DIE 5
-#  define M_UFORK 6
-# endif
-
 // Structs
-typedef struct	s_law
+typedef struct s_data
 {
-	int					philo_nbr;
-	unsigned long int	t_eat;
+	int					n_philo;
 	unsigned long int	t_die;
+	unsigned long int	t_eat;
 	unsigned long int	t_sleep;
-	int					eat_nbr;
-	long unsigned int	instant;
-	int					sim;
-	pthread_mutex_t		s_mtx;
+	int					n_eat;
+	unsigned long int	instant;
+	short				sim;
+	pthread_mutex_t		*s_mtx;
 	pthread_mutex_t		*fork;
-}		t_law;
+}						t_data;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	pthread_t			id;
 	int					nb;
-	int					eat_nb;
-	unsigned long int	life;
-	int					die;
-	t_law				*law;
-}				t_philo;
+	unsigned long int	t_life;
+	int					stat[6];
+	t_data				*data;
+}						t_philo;
 
-// Str Utils
-void		philo_putstr_fd(char *str, int fd);
-int			philo_atoi(char	*ascii);
-int			philo_strlen(char *str);
-void		philo_messagestamp(t_philo *philo, short mode, int life);
+// Enums
+enum	e_status
+{
+	M_FORK = 0,
+	M_EAT = 1,
+	M_SLEEP = 2,
+	M_THINK = 3,
+	M_DIE = 4,
+	N_EAT = 5,
+	PHILO_THINK = 20,
+};
 
-// Struct Utils
-void		philo_join(t_philo *philo, t_law *law);
-t_philo		*philo_initphilo(t_law *law);
-t_law		*philo_initlaw(int argc, char *argv[]);
-void		philo_clean_data(t_law *law, t_philo *philo);
+// philo_stamp
+void				philo_stamperr(char	*message);
+unsigned long int	philo_getinst(void);
+void				philo_stampmod(t_philo *philo, short mod, int life);
 
-// Main
-void		*philo_routine(void	*data);
+// philo_strutils
+int		philo_isposnumber(char *str);
+void	philo_putstr_fd(char *str, int fd);
+int		philo_atoi(char *str);
 
-// Getinstant
-long int	philo_getinstant(void);
+// philo_datautils
+t_data	*philo_datainit(int argc, char *argv[]);
+int		philo_datacheck(t_data *data);
+void	philo_dataclean(t_data *data);
+
+// philo_philoutils
+t_philo	*philo_philoinit(t_data *data);
+int		philo_philocheck(t_philo *philo);
+void	philo_philoclean(t_philo *philo, t_data *data);
+
+// philo_routine
+void	*philo_routine(void *param);
+void	philo_die(t_philo *philo);
+void	philo_drop_fork(t_philo *philo, int *life);
+void	philo_taketwo_fork(t_philo *philo, int *life);
+void	philo_takeone_fork(t_philo *philo, int *life);
+void	philo_die(t_philo *philo);
+
+// philo_routineutils
+int		philo_usleep(t_philo *philo, unsigned long int time, int life);
+void	philo_eat(t_philo *philo, int *life);
+void	philo_sleep(t_philo *philo, int *life);
+void	philo_think(t_philo *philo, int *life);
 
 #endif

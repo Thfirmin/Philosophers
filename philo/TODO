@@ -1,7 +1,0 @@
-Philosophers TODO
-
-| Step          | Description                                                   |
-|:--------------|:--------------------------------------------------------------|
-| Fix bug       | Por validação de quantidade de garfos patra casos de 1 philos |
-| Test programm | Analisar funcionamento do programa com parametros             |
-| eat number    | Finalizar a implementação da verificação de vezes comidas     |

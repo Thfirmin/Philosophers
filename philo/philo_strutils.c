@@ -3,22 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   philo_strutils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
+/*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 02:48:05 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/28 03:38:40 by thfirmin         ###   ########.fr       */
+/*   Created: 2023/01/28 21:00:54 by thfirmin          #+#    #+#             */
+/*   Updated: 2023/01/29 19:17:27 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	philo_isposnumber(char *str)
+{
+	if ((*str == '-') || (*str == '+'))
+		if (*str++ ==  '-')
+			return (0);
+	while (*str)
+	{
+		if ((*str < '0') || (*str > '9'))
+			return (0);
+		str ++;
+	}
+	return (1);
+}
+
 void	philo_putstr_fd(char *str, int fd)
 {
 	while (*str)
-		write(fd, str++, 1);
+		write (fd, str++, 1);
 }
 
-int	philo_atoi(char	*str)
+int	philo_atoi(char *str)
 {
 	int		atoinum;
 	short	signal;
@@ -41,38 +55,4 @@ int	philo_atoi(char	*str)
 	}
 	atoinum = (atoinum * signal);
 	return (atoinum);
-}
-
-int	philo_strlen(char *str)
-{
-	int	len;
-
-	len = 0;
-	if (str)
-		while ((*str + len))
-			len ++;
-	return (len);
-}
-
-void	philo_messagestamp(t_philo *philo, short mode, int life)
-{
-	unsigned long int	instant;
-
-	if (!life && (mode != M_DIE))
-		return ;
-	if (!philo->law->sim)
-		return ;
-	instant = ((philo_getinstant() - philo->law->instant) / 1000);
-	if (mode == M_FORK)
-		printf ("%lu %d has taken a fork\n", instant, philo->nb);
-	else if (mode == M_UFORK)
-		printf ("%lu %d has drop a fork\n", instant, philo->nb);
-	else if (mode == M_EAT)
-		printf ("%lu %d is eating\n", instant, philo->nb);
-	else if (mode == M_SLEEP)
-		printf ("%lu %d is sleeping\n", instant, philo->nb);
-	else if (mode == M_THINK)
-		printf ("%lu %d is thinking\n", instant, philo->nb);
-	else if (mode == M_DIE)
-		printf ("%lu %d is died\n", instant, philo->nb);
 }
