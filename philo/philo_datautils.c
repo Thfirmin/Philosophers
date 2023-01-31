@@ -6,16 +6,16 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 00:20:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/30 04:23:00 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:44:45 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static pthread_mutex_t	*philo_datainit_smtx(void);
+//static pthread_mutex_t	*philo_datainit_smtx(void);
 
-static pthread_mutex_t	*philo_datainit_fork(t_data *data);
-
+//static pthread_mutex_t	*philo_datainit_fork(t_data *data);
+/*
 t_data	*philo_datainit(int argc, char *argv[])
 {
 	t_data	*data;
@@ -36,7 +36,8 @@ t_data	*philo_datainit(int argc, char *argv[])
 	data->s_mtx = philo_datainit_smtx();
 	return (data);
 }
-
+*/
+/*
 int	philo_datacheck(t_data *data)
 {
 	if (!data)
@@ -52,7 +53,8 @@ int	philo_datacheck(t_data *data)
 	}
 	return (1);
 }
-
+*/
+/*
 void	philo_dataclean(t_data *data)
 {
 	int i;
@@ -73,7 +75,8 @@ void	philo_dataclean(t_data *data)
 	}
 	free(data);
 }
-
+*/
+/*
 static pthread_mutex_t	*philo_datainit_fork(t_data *data)
 {
 	pthread_mutex_t	*fork;
@@ -97,7 +100,8 @@ static pthread_mutex_t	*philo_datainit_fork(t_data *data)
 	}
 	return (fork);
 }
-
+*/
+/*
 static pthread_mutex_t	*philo_datainit_smtx(void)
 {
 	pthread_mutex_t	*smtx;
@@ -112,3 +116,4 @@ static pthread_mutex_t	*philo_datainit_smtx(void)
 	}
 	return (smtx);
 }
+*/

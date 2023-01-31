@@ -6,13 +6,13 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:16:50 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/30 04:18:28 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:45:54 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	philo_usleep(t_philo *philo, unsigned long int time, int life)
+/*int	philo_usleep(t_philo *philo, unsigned long int time, int life)
 {
 	unsigned long int	init;
 	unsigned long int	inst;
@@ -31,7 +31,8 @@ int	philo_usleep(t_philo *philo, unsigned long int time, int life)
 	}
 	return (1);
 }
-
+*/
+/*
 void	philo_eat(t_philo *philo, int *life)
 {
 	unsigned long int	time;
@@ -57,7 +58,8 @@ void	philo_eat(t_philo *philo, int *life)
 	if ((time - philo->t_life) >= philo->data->t_die)
 		*life = 0;
 }
-
+*/
+/*
 void	philo_sleep(t_philo *philo, int *life)
 {
 	unsigned long int	time;
@@ -74,7 +76,8 @@ void	philo_sleep(t_philo *philo, int *life)
 	if ((time - philo->t_life) >= philo->data->t_die)
 		*life = 0;
 }
-
+*/
+/*
 void	philo_think(t_philo *philo, int *life)
 {
 	unsigned long int	time;
@@ -90,3 +93,4 @@ void	philo_think(t_philo *philo, int *life)
 	if ((time - philo->t_life) >= philo->data->t_die)
 		*life = 0;
 }
+*/
