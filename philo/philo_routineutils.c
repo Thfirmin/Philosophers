@@ -6,11 +6,38 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:16:50 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 20:45:54 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:20:35 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	philo_eat(t_philo *philo)
+{
+	if (!philo->data->sim)
+		return ;
+	if (!(philo->stat & (1 << M_FORK2)))
+		return ;
+	philo_stampmod(philo, M_EAT);
+}
+
+void	philo_sleep(t_philo *philo)
+{
+	if(!philo->data->sim)
+		return ;
+	if (!(philo->stat & (1 << M_EAT)))
+		return ;
+	philo_stampmod(philo, M_SLEEP);
+}
+
+void	philo_think(t_philo *philo)
+{
+	if (!philo->data->sim)
+		return ;
+	if (!(philo->stat & (1 << M_SLEEP)))
+		return ;
+	philo_stampmod(philo, M_THINK);
+}
 
 /*int	philo_usleep(t_philo *philo, unsigned long int time, int life)
 {

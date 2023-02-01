@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:33:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 20:51:45 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 21:40:17 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ static int	philo_isvalid_arg(int argc, char *argv[]);
 
 int	main(int argc, char *argv[])
 {
-	//t_data	*data;
-	//t_philo	*philo;
+	t_data	*data;
+	t_philo	*philo;
 
 	if (!philo_isvalid_arg(argc, argv))
 		return (2);
-	//data = philo_datainit(argc, argv);
-	//if (!philo_datacheck(data))
-	//	return (2);
-	//philo = philo_philoinit(data);
-	//if (!philo_philocheck(philo))
-	//	return (2);
+	data = philo_datainit(argc, argv);
+	if (!philo_datacheck(data))
+		return (2);
+	philo = philo_philoinit(data);
+	if (!philo_philocheck(philo))
+		return (2);
 	//philo_sim_monitoring(philo, data);
-	//philo_philoclean(philo, data);
-	//philo_dataclean(data);
+	philo_philoclean(philo, data);
+	philo_dataclean(data);
 	return (0);
 }
 /*

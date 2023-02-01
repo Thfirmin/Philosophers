@@ -6,21 +6,49 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:15:35 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 20:46:45 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:19:11 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-/*
+
 void	*philo_routine(void *param)
 {
 	t_philo	*philo;
 
 	philo = param;
-	printf ("Login\nUsername: philosopher\nPassword: %d\n", phi)
+	printf ("Login philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_THINK)));
+	philo_takeone_fork(philo);
+	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_FORK1)));
+	philo_taketwo_fork(philo);
+	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_FORK2)));
+	philo_eat(philo);
+	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_EAT)));
+	philo_sleep(philo);
+	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_SLEEP)));
+	philo_sleep(philo);
+	philo_think(philo);
+	printf ("Logout philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_THINK)));
 	return (0);
 }
-*/
+
+void	philo_takeone_fork(t_philo *philo)
+{
+	if (!(philo->stat & (1 << M_THINK)))
+		return ;
+	if (!philo->data->sim)
+		return ;
+	philo_stampmod(philo, M_FORK1);
+}
+
+void	philo_taketwo_fork(t_philo *philo)
+{
+	if (!philo->data->sim)
+		return ;
+	if (!(philo->stat & (1 << M_FORK1)) || (philo->data->n_philo < 2))
+		return ;
+	philo_stampmod(philo, M_FORK2);
+}
 /*
 void	philo_takeone_fork(t_philo *philo)
 {

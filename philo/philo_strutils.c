@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 21:00:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 20:49:34 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 20:58:29 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	philo_putstr_fd(char *str, int fd)
 		write (fd, str++, 1);
 }
 
-/*
+
 int	philo_atoi(char *str)
 {
 	int		atoinum;
@@ -58,4 +58,4 @@ int	philo_atoi(char *str)
 	atoinum = (atoinum * signal);
 	return (atoinum);
 }
-*/
+

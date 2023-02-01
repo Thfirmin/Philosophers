@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:31:58 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 20:49:48 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:13:35 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,36 +59,36 @@ enum	e_status
 
 // philo_stamp
 void				philo_stamperr(char	*message);
-//unsigned long int	philo_getinst(void);
-//void				philo_stampmod(t_philo *philo, short mod);
+unsigned long int	philo_getinst(void);
+void				philo_stampmod(t_philo *philo, short mod);
 
 // philo_strutils
 int		philo_isposnumber(char *str);
 void	philo_putstr_fd(char *str, int fd);
-//int		philo_atoi(char *str);
+int		philo_atoi(char *str);
 
 // philo_datautils
-//t_data	*philo_datainit(int argc, char *argv[]);
-//int		philo_datacheck(t_data *data);
-//void	philo_dataclean(t_data *data);
+t_data	*philo_datainit(int argc, char *argv[]);
+int		philo_datacheck(t_data *data);
+void	philo_dataclean(t_data *data);
 
 // philo_philoutils
-//t_philo	*philo_philoinit(t_data *data);
-//int		philo_philocheck(t_philo *philo);
-//void	philo_philoclean(t_philo *philo, t_data *data);
+t_philo	*philo_philoinit(t_data *data);
+int		philo_philocheck(t_philo *philo);
+void	philo_philoclean(t_philo *philo, t_data *data);
 
 // philo_routine
-//void	*philo_routine(void *param);
+void	*philo_routine(void *param);
 //void	philo_die(t_philo *philo);
 //void	philo_drop_fork(t_philo *philo, int *life);
-//void	philo_taketwo_fork(t_philo *philo, int *life);
-//void	philo_takeone_fork(t_philo *philo);
+void	philo_taketwo_fork(t_philo *philo);
+void	philo_takeone_fork(t_philo *philo);
 //void	philo_die(t_philo *philo);
 
 // philo_routineutils
 //int		philo_usleep(t_philo *philo, unsigned long int time, int life);
-//void	philo_eat(t_philo *philo, int *life);
-//void	philo_sleep(t_philo *philo, int *life);
-//void	philo_think(t_philo *philo, int *life);
+void	philo_eat(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+void	philo_think(t_philo *philo);
 
 #endif

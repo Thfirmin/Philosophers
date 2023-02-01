@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:14:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 20:49:02 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:18:54 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	philo_stamperr(char *message)
 		philo_putstr_fd(message, 2);
 }
 
-/*
+
 unsigned long int	philo_getinst(void)
 {
 	struct timeval	tv;
@@ -32,8 +32,8 @@ unsigned long int	philo_getinst(void)
 	gettimeofday(&tv, 0);
 	return ((tv.tv_sec * 1000000) + tv.tv_usec);
 }
-*/
-/*
+
+
 void	philo_stampmod(t_philo *philo, short mod)
 {
 	unsigned long int	time;
@@ -54,4 +54,4 @@ void	philo_stampmod(t_philo *philo, short mod)
 	time = ((philo_getinst() - philo->data->instant) / 1000);
 	printf("%lu %d %s\n", time, philo->nb, str[mod]);
 }
-*/
+
