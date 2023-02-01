@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:31:58 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 22:13:35 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/01 06:20:40 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ void	philo_philoclean(t_philo *philo, t_data *data);
 
 // philo_routine
 void	*philo_routine(void *param);
-//void	philo_die(t_philo *philo);
-//void	philo_drop_fork(t_philo *philo, int *life);
+void	philo_drop_fork(t_philo *philo);
 void	philo_taketwo_fork(t_philo *philo);
 void	philo_takeone_fork(t_philo *philo);
 //void	philo_die(t_philo *philo);

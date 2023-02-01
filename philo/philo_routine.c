@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:15:35 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 22:29:58 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/01 06:21:18 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,15 @@ void	*philo_routine(void *param)
 	t_philo	*philo;
 
 	philo = param;
-	printf ("Login philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_THINK)));
-	philo_takeone_fork(philo);
-	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_FORK1)));
-	philo_taketwo_fork(philo);
-	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_FORK2)));
-	philo_eat(philo);
-	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_EAT)));
-	philo_sleep(philo);
-	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_SLEEP)));
-	philo_think(philo);
-	printf ("Logout philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_THINK)));
+	while (!(philo->stat & (1 << M_DIE)))
+	{
+		philo_takeone_fork(philo);
+		philo_taketwo_fork(philo);
+		philo_eat(philo);
+		philo_sleep(philo);
+		philo_think(philo);
+	}
+	//philo_die(philo);
 	return (0);
 }
 
