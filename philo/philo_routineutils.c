@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:16:50 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 22:20:35 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:29:58 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,44 @@
 
 void	philo_eat(t_philo *philo)
 {
-	if (!philo->data->sim)
+	unsigned long int	time;
+
+	if (!philo->data->sim || (philo->stat & (1 << M_DIE)))
 		return ;
 	if (!(philo->stat & (1 << M_FORK2)))
 		return ;
 	philo_stampmod(philo, M_EAT);
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		philo->stat = 1 << M_DIE;
 }
 
 void	philo_sleep(t_philo *philo)
 {
-	if(!philo->data->sim)
+	unsigned long int	time;
+
+	if (!philo->data->sim || (philo->stat & (1 << M_DIE)))
 		return ;
 	if (!(philo->stat & (1 << M_EAT)))
 		return ;
 	philo_stampmod(philo, M_SLEEP);
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		philo->stat = 1 << M_DIE;
 }
 
 void	philo_think(t_philo *philo)
 {
-	if (!philo->data->sim)
+	unsigned long int	time;
+
+	if (!philo->data->sim || (philo->stat & (1 << M_DIE)))
 		return ;
 	if (!(philo->stat & (1 << M_SLEEP)))
 		return ;
 	philo_stampmod(philo, M_THINK);
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		philo->stat = 1 << M_DIE;
 }
 
 /*int	philo_usleep(t_philo *philo, unsigned long int time, int life)

@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:15:35 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 22:19:11 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/01/31 22:29:58 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	*philo_routine(void *param)
 	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_EAT)));
 	philo_sleep(philo);
 	printf ("philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_SLEEP)));
-	philo_sleep(philo);
 	philo_think(philo);
 	printf ("Logout philo %d with stat %d (%d)\n", philo->nb, philo->stat, (philo->stat & (1 << M_THINK)));
 	return (0);
@@ -34,20 +33,30 @@ void	*philo_routine(void *param)
 
 void	philo_takeone_fork(t_philo *philo)
 {
+	unsigned long int	time;
+
+	if (!philo->data->sim || (philo->stat & (1 << M_DIE)))
+		return ;
 	if (!(philo->stat & (1 << M_THINK)))
 		return ;
-	if (!philo->data->sim)
-		return ;
 	philo_stampmod(philo, M_FORK1);
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		philo->stat = 1 << M_DIE;
 }
 
 void	philo_taketwo_fork(t_philo *philo)
 {
-	if (!philo->data->sim)
+	unsigned long int	time;
+
+	if (!philo->data->sim || (philo->stat & (1 << M_DIE)))
 		return ;
 	if (!(philo->stat & (1 << M_FORK1)) || (philo->data->n_philo < 2))
 		return ;
 	philo_stampmod(philo, M_FORK2);
+	time = (philo_getinst() / 1000);
+	if ((time - philo->t_life) >= philo->data->t_die)
+		philo->stat = 1 << M_DIE;
 }
 /*
 void	philo_takeone_fork(t_philo *philo)
