@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 01:32:55 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 17:47:00 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:10:15 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ void	philo_philoclean(t_philo *philo, t_data *data)
 		return ;
 	i = -1;
 	while (++i < data->n_philo)
+	{
 		pthread_join((philo + i)->id, 0);
+		pthread_mutex_destroy((philo + i)->m_stat);
+		free((philo + i)->m_stat);
+	}
 	free(philo);
 }
 
