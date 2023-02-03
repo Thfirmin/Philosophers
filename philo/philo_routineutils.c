@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:16:50 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 11:45:30 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:13:08 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,6 @@ void	philo_usleep(t_philo *philo, unsigned long int time)
 			pthread_mutex_lock(philo->m_stat);
 			philo->stat |= 1 << M_DIE;
 			pthread_mutex_unlock(philo->m_stat);
-			pthread_mutex_lock(philo->data->s_mtx);
-			philo->data->sim = 0;
-			pthread_mutex_unlock(philo->data->s_mtx);
 			return ;
 		}
 	}

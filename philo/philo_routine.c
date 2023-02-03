@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:15:35 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 11:56:31 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 12:20:09 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,27 @@ void	philo_takeone_fork(t_philo *philo)
 
 	if (!philo_islive(philo))
 		return ;
+	printf ("stat %p locked for %d\n", philo->nb);
 	pthread_mutex_lock(philo->m_stat);
 	if (!(philo->stat & (1 << M_THINK)))
 	{
+		printf ("stat %p unlocked for %d\n", philo->nb);
 		pthread_mutex_unlock(philo->m_stat);
 		return ;
 	}
+	printf ("stat %p unlocked for %d\n", philo->nb);
 	pthread_mutex_unlock(philo->m_stat);
 	p_nbr = philo->data->n_philo;
 	if (philo->nb % 2)
+	{
+		printf ("fork1 %p locked for %d\n", philo->nb);
 		pthread_mutex_lock(&philo->data->fork[philo->nb % p_nbr]);
+	}
 	else
+	{
+		printf ("fork1 %p locked for %d\n", philo->nb);
 		pthread_mutex_lock(&philo->data->fork[philo->nb - 1]);
+	}
 	philo_stampmod(philo, M_FORK1);
 }
 
@@ -58,18 +67,27 @@ void	philo_taketwo_fork(t_philo *philo)
 
 	if (!philo_islive(philo))
 		return ;
+	printf ("stat %p locked for %d\n", philo->nb);
 	pthread_mutex_lock(philo->m_stat);
 	if (!((philo->stat & (1 << M_FORK1)) && (philo->data->n_philo >= 2)))
 	{
+		printf ("stat %p unlocked for %d\n", philo->nb);
 		pthread_mutex_unlock(philo->m_stat);
 		return ;
 	}
+	printf ("stat %p unlocked for %d\n", philo->nb);
 	pthread_mutex_unlock(philo->m_stat);
 	p_nbr = philo->data->n_philo;
 	if (philo->nb % 2)
+	{
+		printf ("fork2 %p locked for %d\n", philo->nb);
 		pthread_mutex_lock(&philo->data->fork[philo->nb - 1]);
+	}
 	else
+	{
+		printf ("fork2 %p locked for %d\n", philo->nb);
 		pthread_mutex_lock(&philo->data->fork[philo->nb % p_nbr]);
+	}
 	philo_stampmod(philo, M_FORK2);
 }
 
@@ -77,6 +95,7 @@ void	philo_drop_fork(t_philo *philo)
 {
 	int					p_nbr;
 
+	printf ("stat locked for %d\n", philo->nb);
 	pthread_mutex_lock(philo->m_stat);
 	if (!(philo->stat & (1 << M_EAT)))
 	{
@@ -93,7 +112,10 @@ void	philo_die(t_philo *philo)
 {
 	pthread_mutex_lock(philo->data->s_mtx);
 	if (!philo->data->unic)
+	{
 		philo->data->unic = 1;
+		philo->data->sim = 0;
+	}
 	else
 	{
 		pthread_mutex_unlock(philo->data->s_mtx);
