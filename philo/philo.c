@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:33:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 11:48:55 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 15:21:16 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	philo_isvalid_arg(int argc, char *argv[]);
 
-static void	philo_sim_monitoring(t_philo *philo, t_data *data);
+//static void	philo_sim_monitoring(t_philo *philo, t_data *data);
 
 int	main(int argc, char *argv[])
 {
@@ -31,13 +31,14 @@ int	main(int argc, char *argv[])
 		philo = philo_philoinit(data);
 		if (!philo_philocheck(philo))
 			return (2);
-		philo_sim_monitoring(philo, data);
+		//philo_sim_monitoring(philo, data);
 		philo_philoclean(philo, data);
 	}
 	philo_dataclean(data);
 	return (0);
 }
 
+/*
 static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 {
 	int					i;
@@ -59,9 +60,11 @@ static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 				pthread_mutex_unlock(data->s_mtx);
 				break ;
 			}
+			// Colocar usleep krl 🖕
 		}
 	}
 }
+*/
 
 static int	philo_isvalid_arg(int argc, char *argv[])
 {
@@ -77,7 +80,7 @@ static int	philo_isvalid_arg(int argc, char *argv[])
 	{
 		if (!philo_isposnumber(*(argv + i)))
 		{
-			philo_stamperr("Error: Use just positive decimal number");
+			philo_stamperr("Error: Use just positive decimal number\n");
 			return (0);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 00:20:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 10:18:38 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:53:43 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_data	*philo_datainit(int argc, char *argv[])
 	if(!data)
 		return (data);
 	memset(data, 0, sizeof(t_data));
-	data->n_philo = philo_atoi(argv[1]);
-	data->t_die = philo_atoi(argv[2]);
-	data->t_eat = philo_atoi(argv[3]);
-	data->t_sleep = philo_atoi(argv[4]);
+	data->n_philo = philo_atol(argv[1]);
+	data->t_die = (philo_atol(argv[2]) * 1000);
+	data->t_eat = (philo_atol(argv[3]) * 1000);
+	data->t_sleep = (philo_atol(argv[4]) * 1000);
 	data->n_eat = -1;
 	data->sim = 1;
 	if (argc == 6)
-		data->n_eat = philo_atoi(argv[5]);
+		data->n_eat = philo_atol(argv[5]);
 	data->fork = philo_datainit_fork(data);
 	data->s_mtx = philo_mtxinit();
 	return (data);

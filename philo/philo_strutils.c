@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 21:00:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 20:58:29 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:52:27 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	philo_putstr_fd(char *str, int fd)
 }
 
 
-int	philo_atoi(char *str)
+unsigned long int	philo_atol(char *str)
 {
-	int		atoinum;
-	short	signal;
+	unsigned long int	atoinum;
+	short				signal;
 
 	signal = 1;
 	atoinum = 0;

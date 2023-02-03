@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:14:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 11:26:02 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:37:28 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	philo_stamperr(char *message)
 {
 	if (!message)
 	{
-		philo_putstr_fd("Usage: ./philo <philos_nbr> <t_die> <t_eat> ", 2);
+		philo_putstr_fd("Usage: ./philo <philos_nbr> <t_die> <t_eat>", 2);
 		philo_putstr_fd("<t_sleep> [nbr_time_philos_to_eat]\n", 2);
 	}
 	else
@@ -48,9 +48,7 @@ void	philo_stampmod(t_philo *philo, short mod)
 
 	if (!philo_islive(philo) && !(mod == M_DIE))
 		return ;
-	pthread_mutex_lock(philo->m_stat);
-	philo->stat = (1 << mod);
-	pthread_mutex_unlock(philo->m_stat);
+	philo_write(&philo->stat, (1 << mod), philo->m_stat);
 	time = ((philo_getinst() - philo->data->instant) / 1000);
 	printf("%lu %d %s\n", time, philo->nb, str[mod]);
 }

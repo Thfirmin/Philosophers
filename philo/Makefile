@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 04:47:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/01/31 22:38:32 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/02/03 17:45:48 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC_MAIN	= philo.c \
 			  philo_philoutils.c \
 			  philo_routineutils.c \
 			  philo_routine.c \
-			  philo_stamp.c
+			  philo_stamp.c \
+			  philo_mutexutils.c
 
 SRCS	= $(addprefix $(PTH_SRC),$(SRC_MAIN))
 
