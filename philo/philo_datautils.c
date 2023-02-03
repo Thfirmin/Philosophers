@@ -6,13 +6,11 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 00:20:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 21:01:41 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 10:18:38 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static pthread_mutex_t	*philo_datainit_smtx(void);
 
 static pthread_mutex_t	*philo_datainit_fork(t_data *data);
 
@@ -33,7 +31,7 @@ t_data	*philo_datainit(int argc, char *argv[])
 	if (argc == 6)
 		data->n_eat = philo_atoi(argv[5]);
 	data->fork = philo_datainit_fork(data);
-	data->s_mtx = philo_datainit_smtx();
+	data->s_mtx = philo_mtxinit();
 	return (data);
 }
 
@@ -96,19 +94,4 @@ static pthread_mutex_t	*philo_datainit_fork(t_data *data)
 		fork = 0;
 	}
 	return (fork);
-}
-
-static pthread_mutex_t	*philo_datainit_smtx(void)
-{
-	pthread_mutex_t	*smtx;
-
-	smtx = malloc(sizeof(pthread_mutex_t));
-	if (!smtx)
-		return (0);
-	if (pthread_mutex_init(smtx, 0))
-	{
-		free(smtx);
-		smtx = 0;
-	}
-	return (smtx);
 }

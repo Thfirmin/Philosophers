@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:33:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/01/31 22:36:12 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 11:48:55 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	philo_isvalid_arg(int argc, char *argv[]);
 
-//static void	philo_sim_monitoring(t_philo *philo, t_data *data);
+static void	philo_sim_monitoring(t_philo *philo, t_data *data);
 
 int	main(int argc, char *argv[])
 {
@@ -31,13 +31,13 @@ int	main(int argc, char *argv[])
 		philo = philo_philoinit(data);
 		if (!philo_philocheck(philo))
 			return (2);
-		//philo_sim_monitoring(philo, data);
+		philo_sim_monitoring(philo, data);
 		philo_philoclean(philo, data);
 	}
 	philo_dataclean(data);
 	return (0);
 }
-/*
+
 static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 {
 	int					i;
@@ -51,7 +51,9 @@ static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 			time = (philo_getinst() / 1000);
 			if ((time - (philo + i)->t_life) >= data->t_die)
 			{
-				(philo + i)->stat = 1 << M_DIE;
+				pthread_mutex_lock((philo + i)->m_stat);
+				(philo + i)->stat |= 1 << M_DIE;
+				pthread_mutex_unlock((philo + i)->m_stat);
 				pthread_mutex_lock(data->s_mtx);
 				data->sim = 0;
 				pthread_mutex_unlock(data->s_mtx);
@@ -60,7 +62,7 @@ static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 		}
 	}
 }
-*/
+
 static int	philo_isvalid_arg(int argc, char *argv[])
 {
 	int		i;
@@ -80,4 +82,19 @@ static int	philo_isvalid_arg(int argc, char *argv[])
 		}
 	}
 	return (1);
+}
+
+pthread_mutex_t	*philo_mtxinit(void)
+{
+	pthread_mutex_t	*mtx;
+
+	mtx = malloc(sizeof(pthread_mutex_t));
+	if (!mtx)
+		return (0);
+	if (pthread_mutex_init(mtx, 0))
+	{
+		free(mtx);
+		mtx = 0;
+	}
+	return (mtx);
 }
