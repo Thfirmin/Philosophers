@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:16:50 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 18:42:08 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 19:20:02 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	philo_eat(t_philo *philo)
 		return ;
 	philo->t_life = philo_getinst();
 	philo_stampmod(philo, M_EAT);
+	philo_write(&philo->n_eat, (philo->n_eat + 1), philo->m_stat);
 	philo_usleep(philo, philo->data->t_eat);
 }
 
@@ -47,6 +48,8 @@ int	philo_islive(t_philo *philo)
 	if (philo_read((philo->stat & (1 << M_DIE)), philo->m_stat))
 		return (0);
 	else if (!philo_read(philo->data->sim, philo->data->s_mtx))
+		return (0);
+	else if (philo_read((philo->n_eat == philo->data->n_eat), philo->m_stat))
 		return (0);
 	return (1);
 }
