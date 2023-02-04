@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:33:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 23:19:13 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:52:20 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
-
 static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 {
 	int					i;
@@ -52,7 +51,8 @@ static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 			time = philo_getinst();
 			if ((time - (philo + i)->t_life) >= data->t_die)
 			{
-				philo_write(&philo->stat, (philo->stat | (1 << M_DIE)), philo->m_stat);
+				philo_write(&philo->stat, (philo->stat | (1 << M_DIE)),
+					philo->m_stat);
 				philo_write(&data->sim, 0, data->s_mtx);
 				break ;
 			}
@@ -60,7 +60,6 @@ static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 		}
 	}
 }
-
 
 static int	philo_isvalid_arg(int argc, char *argv[])
 {

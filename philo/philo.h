@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:31:58 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 18:35:41 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:47:05 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ int					philo_islive(t_philo *philo);
 
 // philo_mutex_utils
 void				philo_write(void *dst, int src, pthread_mutex_t *mtx);
-int					philo_read(int	dst, pthread_mutex_t *mtx);
+int					philo_read(int dst, pthread_mutex_t *mtx);
 
 #endif

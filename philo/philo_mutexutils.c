@@ -6,13 +6,13 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 17:39:41 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 18:38:36 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:49:55 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	philo_read(int	dst, pthread_mutex_t *mtx)
+int	philo_read(int dst, pthread_mutex_t *mtx)
 {
 	pthread_mutex_lock(mtx);
 	if (dst)

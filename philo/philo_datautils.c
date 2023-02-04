@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 00:20:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 14:53:43 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:46:39 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_data	*philo_datainit(int argc, char *argv[])
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	if(!data)
+	if (!data)
 		return (data);
 	memset(data, 0, sizeof(t_data));
 	data->n_philo = philo_atol(argv[1]);
@@ -53,7 +53,7 @@ int	philo_datacheck(t_data *data)
 
 void	philo_dataclean(t_data *data)
 {
-	int i;
+	int	i;
 
 	if (!data)
 		return ;
@@ -84,7 +84,7 @@ static pthread_mutex_t	*philo_datainit_fork(t_data *data)
 	while (++i < data->n_philo)
 	{
 		if (pthread_mutex_init((fork + i), 0))
-			break;
+			break ;
 	}
 	if (i != data->n_philo)
 	{

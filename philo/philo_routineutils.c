@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:16:50 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 23:44:59 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:52:39 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	philo_usleep(t_philo *philo, unsigned long int time)
 		inst = philo_getinst();
 		if ((inst - philo->t_life) >= philo->data->t_die)
 		{
-			philo_write(&philo->stat, (philo->stat | (1 << M_DIE)), philo->m_stat);
+			philo_write(&philo->stat, (philo->stat | (1 << M_DIE)),
+				philo->m_stat);
 			philo_write(&philo->data->sim, 0, philo->data->s_mtx);
 			return ;
 		}

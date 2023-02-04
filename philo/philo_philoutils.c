@@ -6,12 +6,11 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 01:32:55 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 19:10:15 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:47:39 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 t_philo	*philo_philoinit(t_data *data)
 {
@@ -51,7 +50,6 @@ int	philo_philocheck(t_philo *philo)
 	return (1);
 }
 
-
 void	philo_philoclean(t_philo *philo, t_data *data)
 {
 	int	i;
@@ -67,4 +65,3 @@ void	philo_philoclean(t_philo *philo, t_data *data)
 	}
 	free(philo);
 }
-

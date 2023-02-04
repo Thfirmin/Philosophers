@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 21:00:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 14:52:27 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/03 23:51:30 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	philo_isposnumber(char *str)
 {
 	if ((*str == '-') || (*str == '+'))
-		if (*str++ ==  '-')
+		if (*str++ == '-')
 			return (0);
 	while (*str)
 	{
@@ -26,13 +26,11 @@ int	philo_isposnumber(char *str)
 	return (1);
 }
 
-
 void	philo_putstr_fd(char *str, int fd)
 {
 	while (*str)
 		write (fd, str++, 1);
 }
-
 
 unsigned long int	philo_atol(char *str)
 {
@@ -58,4 +56,3 @@ unsigned long int	philo_atol(char *str)
 	atoinum = (atoinum * signal);
 	return (atoinum);
 }
-
