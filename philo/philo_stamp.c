@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 19:14:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 23:49:35 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/08 22:34:45 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,13 @@ void	philo_stampmod(t_philo *philo, short mod)
 
 	if (!philo_islive(philo) && !(mod == M_DIE))
 		return ;
-	philo_write(&philo->stat, (1 << mod), philo->m_stat);
+	usleep(150);
+	pthread_mutex_lock(philo->m_stat);
+	if (mod == M_DIE)
+		philo->stat |= (1 << mod);
+	else
+		philo->stat = (1 << mod);
+	pthread_mutex_unlock(philo->m_stat);
 	time = ((philo_getinst() - philo->data->instant) / 1000);
 	printf("%lu %d %s\n", time, philo->nb, str[mod]);
 }

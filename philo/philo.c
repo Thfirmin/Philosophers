@@ -6,13 +6,15 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 20:33:02 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 23:52:20 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/08 22:16:28 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static int	philo_isvalid_arg(int argc, char *argv[]);
+
+static int	simas(t_data *data);
 
 static void	philo_sim_monitoring(t_philo *philo, t_data *data);
 
@@ -26,7 +28,7 @@ int	main(int argc, char *argv[])
 	data = philo_datainit(argc, argv);
 	if (!philo_datacheck(data))
 		return (2);
-	if (data->t_die)
+	if (data->t_die && data->n_philo)
 	{
 		philo = philo_philoinit(data);
 		if (!philo_philocheck(philo))
@@ -43,22 +45,40 @@ static void	philo_sim_monitoring(t_philo *philo, t_data *data)
 	int					i;
 	unsigned long int	time;
 
-	while (data->sim)
+	usleep(200);
+	while (simas(data))
 	{
 		i = -1;
 		while (++i < data->n_philo)
 		{
-			time = philo_getinst();
-			if ((time - (philo + i)->t_life) >= data->t_die)
+			pthread_mutex_lock((philo + i)->data->s_mtx);
+			time = ((philo_getinst() - (philo + i)->t_life) >= data->t_die);
+			pthread_mutex_unlock((philo + i)->data->s_mtx);
+			if (time)
 			{
-				philo_write(&philo->stat, (philo->stat | (1 << M_DIE)),
-					philo->m_stat);
-				philo_write(&data->sim, 0, data->s_mtx);
+				pthread_mutex_lock((philo + i)->data->s_mtx);
+				data->sim = 0;
+				pthread_mutex_unlock((philo + i)->data->s_mtx);
+				pthread_mutex_lock((philo + i)->m_stat);
+				philo->stat |= (1 << M_DIE);
+				pthread_mutex_unlock((philo + i)->m_stat);
 				break ;
 			}
 			usleep(150);
 		}
 	}
+}
+
+static int	simas(t_data *data)
+{
+	pthread_mutex_lock(data->s_mtx);
+	if (data->sim)
+	{
+		pthread_mutex_unlock(data->s_mtx);
+		return (1);
+	}
+	pthread_mutex_unlock(data->s_mtx);
+	return (0);
 }
 
 static int	philo_isvalid_arg(int argc, char *argv[])

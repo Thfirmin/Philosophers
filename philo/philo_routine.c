@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:15:35 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/03 23:33:52 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/08 22:37:02 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	*philo_routine(void *param)
 {
 	t_philo	*philo;
+	int		lifada;
 
 	philo = param;
 	while (philo_islive(philo))
@@ -26,7 +27,11 @@ void	*philo_routine(void *param)
 		philo_sleep(philo);
 		philo_think(philo);
 	}
-	if (philo_read((philo->stat & (1 << M_DIE)), philo->m_stat))
+	usleep(150);
+	pthread_mutex_lock(philo->m_stat);
+	lifada = (philo->stat & (1 << M_DIE));
+	pthread_mutex_unlock(philo->m_stat);
+	if (lifada)
 		philo_die(philo);
 	return (0);
 }
@@ -50,11 +55,15 @@ void	philo_takeone_fork(t_philo *philo)
 void	philo_taketwo_fork(t_philo *philo)
 {
 	int	p_nbr;
+	int	ret;
 
 	p_nbr = philo->data->n_philo;
 	if (!philo_islive(philo))
 		return ;
-	if (!philo_read((philo->stat & (1 << M_FORK1)), philo->m_stat))
+	pthread_mutex_lock(philo->m_stat);
+	ret = (philo->stat & (1 << M_FORK1));
+	pthread_mutex_unlock(philo->m_stat);
+	if (!ret)
 		return ;
 	if (philo->data->n_philo < 2)
 		return ;
