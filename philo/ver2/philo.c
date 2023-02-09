@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:32 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/09 01:33:11 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/09 01:48:59 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int argc, char *argv[])
 {
 	if (!ph_isvalid_arg(argc, argv))
 		return (2);
+	data = ph_datainit(argc, argv);
+	ph_dataclean(data);
 	return (0);
 }
 
