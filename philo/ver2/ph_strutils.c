@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:33:40 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/09 01:45:20 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:22:28 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,22 @@ void	ph_putstr_fd(char *str, int fd)
 	if (str)
 		while (*str)
 			write (fd, str++, 1);
+}
+
+time_t	ph_atol(char *str)
+{
+	time_t	nbr;
+	short	sign;
+
+	if (!str)
+		return (0);
+	while (((*str >= 9) && (*str <= 13)) || (*str == ' '))
+		str ++;
+	sign = 1;
+	if ((*str == '+') || (*str == '-'))
+		if (*str++ == '-')
+			sign = -1;
+	while ((*str >= '0') && (*str <= '9'))
+		nbr = ((nbr * 10) + (*str++ - '0'));
+	return (nbr * sign);
 }

@@ -6,13 +6,13 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/09 01:43:04 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:23:12 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long int	ph_getinst(unsigned long int start)
+time_t	ph_getinst(time_t start)
 {
 	struct timeval tv;
 

@@ -1,4 +1,4 @@
-# **************************************************************************** #
+	# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/20 04:47:07 by thfirmin          #+#    #+#              #
-#    Updated: 2023/02/09 01:17:57 by thfirmin         ###   ########.fr        #
+#    Updated: 2023/02/09 23:41:48 by thfirmin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,9 +70,13 @@ all:		$(NAME)
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) 
 
-debug:	CFLAGS += -g -fsanitize=thread
+debug:	CFLAGS += -g
 
 debug:	re
+
+debug2:	CFLAGS += -g -fsanitize=thread
+
+debug2:	re
 
 clean:
 ifneq (,$(shell ls $(OBJS) 2> /dev/null))

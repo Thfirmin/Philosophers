@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:06:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/09 01:43:47 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/09 23:39:57 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,29 @@
 # include <stdlib.h>
 # include <string.h>
 
-// Structs
+// Typedefs & Structs
+typedef pthread_mutex_t	mutex_t;
+
 typedef struct s_data
 {
 	int					n_philo;
-	unsigned long int	t_die;
-	unsigned long int	t_eat;
-	unsigned long int	t_sleep;
+	time_t				t_die;
+	time_t				t_eat;
+	time_t				t_sleep;
 	int					n_eat;
-	unsigned long int	start;
+	time_t				start;
 	int					sim;
 	int					unic;
-	pthread_mutex_t		*m_sim;
-	pthread_mutex_t		*m_stat;
-	pthread_mutex_t		*m_data;
-	pthread_mutex_t		*fork;
+	mutex_t				*m_data;
+	mutex_t				*m_philo;
+	mutex_t				*fork;
 }						t_data;
 
 typedef struct s_philo
 {
 	pthread_t			id;
 	int					nb;
-	unsigned long int	t_life;
+	time_t				t_life;
 	unsigned char		stat;
 	int					n_eat;
 	t_data				*data;
@@ -62,11 +63,23 @@ enum	e_status
 
 
 // ph_stamp
-unsigned long int	ph_getinst(unsigned long int start);
-void				ph_stamperr(char *message);
+time_t	ph_getinst(time_t start);
+void	ph_stamperr(char *message);
 
 // ph_strutils
-int					ph_isposnumber(char *nbr);
-void				ph_putstr_fd(char *str, int fd);
+int		ph_isposnumber(char *nbr);
+void	ph_putstr_fd(char *str, int fd);
+time_t	ph_atol(char *str);
+
+// ph_datautils
+t_data	*ph_initdata(int argc, char *argv[]);
+void	ph_cleandata(t_data **data);
+
+// ph_mutexutils
+mutex_t	*ph_initmutex(void);
+mutex_t	*ph_initfork(t_data *data);
+void	ph_destroymutex(mutex_t **mtx);
+void	ph_destroyfork(t_data *data, mutex_t **fork);
+
 
 #endif
