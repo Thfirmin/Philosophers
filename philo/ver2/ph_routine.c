@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:19 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/11 08:57:27 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/11 09:46:13 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ph_routine(void *param)
 	t_philo	*philo;
 	
 	philo = param;
-	while (ph_islive(philo))
+	while (ph_islive(philo) || (ph_stat(philo, P_FORK1)))
 	{
 		ph_takeone_fork(philo);
 		ph_taketwo_fork(philo);

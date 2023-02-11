@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/11 09:34:11 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/11 09:47:55 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,16 @@ void	ph_rmstat(t_philo *ph, int mod)
 	ph->stat |= (1 << mod);
 	ph->stat ^= (1 << mod);
 	pthread_mutex_unlock(ph->data->m_philo);
+}
+
+int	ph_stat(t_philo *ph, int mod)
+{
+	pthread_mutex_lock(ph->data->m_philo);
+	if (ph->stat & (1 << mod))
+	{
+		pthread_mutex_unlock(ph->data->m_philo);
+		return (1);
+	}
+	pthread_mutex_unlock(ph->data->m_philo);
+	return (0);
 }

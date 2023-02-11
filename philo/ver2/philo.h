@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:06:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/11 09:34:26 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/11 09:48:14 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ time_t	ph_getinst(time_t start);
 void	ph_stamperr(char *message);
 void	ph_stampmod(t_philo *ph, int mod);
 void	ph_rmstat(t_philo *ph, int mod);
+int		ph_stat(t_philo *ph, int mod);
 
 // ph_strutils
 int		ph_isposnumber(char *nbr);
