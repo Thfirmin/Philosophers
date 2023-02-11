@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:33:40 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/09 21:22:28 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:05:44 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ time_t	ph_atol(char *str)
 	time_t	nbr;
 	short	sign;
 
+	nbr = 0;
 	if (!str)
 		return (0);
 	while (((*str >= 9) && (*str <= 13)) || (*str == ' '))

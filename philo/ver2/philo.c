@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:32 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/09 23:09:43 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/10 20:12:01 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,21 @@ static int	ph_isvalid_arg(int argc, char *argv[]);
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
+	t_philo	*philo;
 
 	if (!ph_isvalid_arg(argc, argv))
-		return (2);
-	//printf ("Initializing data...\n");
+		return (1);
 	data = ph_initdata(argc, argv);
-	//printf ("Data initialized\nErasing data...\n");
+	if (!ph_checkdata(data))
+		return (2);
+	if (data->n_philo && data->t_die && data->n_eat)
+	{
+		philo = ph_initphilo(data);
+		if (!ph_checkphilo(philo, data))
+			return (3);
+		ph_cleanphilo(&philo, data);
+	}
 	ph_cleandata(&data);
-	//printf ("Data erased\n");
 	return (0);
 }
 
