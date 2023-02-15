@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:06:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/11 09:48:14 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:57:03 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,30 @@ typedef pthread_mutex_t	mutex_t;
 
 typedef struct s_data
 {
-	int					n_philo;
-	time_t				t_die;
-	time_t				t_eat;
-	time_t				t_sleep;
-	int					n_eat;
-	time_t				start;
-	int					sim;
-	int					unic;
-	mutex_t				*m_data;
-	mutex_t				*m_philo;
-	mutex_t				**fork;
+	int					n_philo; // RD
+	time_t				t_die; // RD
+	time_t				t_eat; // RD
+	time_t				t_sleep; // RD
+	int					n_eat; // RD
+	time_t				start; // RD
+	int					sim; // RDWR
+	mutex_t				*m_data; // MTX
+	mutex_t				*m_philo; // MTX
+	mutex_t				**fork; // MTX
 }						t_data;
 
 typedef struct s_philo
 {
-	pthread_t			id;
-	int					nb;
-	time_t				t_life;
-	unsigned char		stat;
-	int					n_eat;
-	t_data				*data;
+	pthread_t			id; // RD
+	int					nb; // RD
+	time_t				t_life; // RDWR
+	unsigned char		stat; // RDWR
+	int					n_eat; // RDWR
+	t_data				*data; // RDWR
 }						t_philo;
 
 // Enums
-enum	e_status
+typedef enum e_status
 {
 	P_FORK1 = 0,
 	P_FORK2 = 1,
@@ -58,16 +57,15 @@ enum	e_status
 	P_SLEEP = 3,
 	P_THINK = 4,
 	P_DIE = 5,
+	P_EATED = 6,
 	T_THINK = 150,
-};
+}	t_status;
 
 
 // ph_stamp
 time_t	ph_getinst(time_t start);
 void	ph_stamperr(char *message);
-void	ph_stampmod(t_philo *ph, int mod);
-void	ph_rmstat(t_philo *ph, int mod);
-int		ph_stat(t_philo *ph, int mod);
+void	ph_stamplog(t_philo *ph, t_status stat);
 
 // ph_strutils
 int		ph_isposnumber(char *nbr);
@@ -103,5 +101,15 @@ void	ph_takeone_fork(t_philo *ph);
 void	ph_taketwo_fork(t_philo *ph);
 void	ph_dropfork(t_philo *ph);
 void	ph_usleep(t_philo *ph, time_t t_mcs);
+
+// ph_rdwr_data
+void	ph_wrdt(t_philo *ph, void *data, int aux, short mod);
+int		ph_rddt(t_philo *ph, void *data, int cmp);
+
+// ph_rdwr_philo
+int		ph_rdph_stat(t_philo *ph, t_status flag);
+void	ph_wrph_stat(t_philo *ph, t_status flag, short mod);
+time_t	ph_rdph(t_philo *ph, void *data);
+void	ph_wrph(t_philo *ph, void *data, int aux, short mod);
 
 #endif

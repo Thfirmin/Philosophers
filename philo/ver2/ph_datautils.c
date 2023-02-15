@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:44 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/10 19:35:48 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:48:31 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ t_data	*ph_initdata(int argc, char *argv[])
 	data->t_die = (ph_atol(argv[2]) * 1000);
 	data->t_eat = (ph_atol(argv[3]) * 1000);
 	data->t_sleep = (ph_atol(argv[4]) * 1000);
+	data->sim = 0;
 	data->n_eat = -1;
-	data->sim = 1;
 	if (argc == 6)
 		data->n_eat = ph_atol(argv[5]);
-	else
-		data->n_eat = -1;
 	data->m_data = ph_initmutex();
 	data->m_philo = ph_initmutex();
 	data->fork = ph_initfork(data);

@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:07 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/10 20:12:52 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:47:31 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_philo	*ph_initphilo(t_data *data)
 		{
 			(philo + i)->nb = (i + 1);
 			(philo + i)->data = data;
+			(philo + i)->n_eat = 0;
 			(philo + i)->stat = (1 << P_THINK);
 			(philo + i)->t_life = data->start;
 			if (pthread_create(&(philo + i)->id, 0, ph_routine, (philo + i)))

@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/11 09:47:55 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:33:56 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ void	ph_stamperr(char *message)
 		ph_putstr_fd(message, 2);
 }
 
-void	ph_stampmod(t_philo *ph, int mod)
+void	ph_stamplog(t_philo *ph, t_status stat)
 {
-	time_t	time;
+	time_t		time;
+	int			ret;
 	const char	*str[] = {
 		"has taken a fork",
 		"has taken a fork",
@@ -44,34 +45,10 @@ void	ph_stampmod(t_philo *ph, int mod)
 		"is died"
 	};
 
-	if (!ph_islive(ph) && (mod != P_DIE))
-		return ;
-	pthread_mutex_lock(ph->data->m_philo);
-	if (mod != P_FORK1)
-		ph->stat |= (1 << mod);
-	else
-		ph->stat = (1 << mod);
-	pthread_mutex_unlock(ph->data->m_philo);
-	time = (ph_getinst(ph->data->start) / 1000);
-	printf("%ld %d %s\n", time, ph->nb, str[mod]);
-}
-
-void	ph_rmstat(t_philo *ph, int mod)
-{
-	pthread_mutex_lock(ph->data->m_philo);
-	ph->stat |= (1 << mod);
-	ph->stat ^= (1 << mod);
-	pthread_mutex_unlock(ph->data->m_philo);
-}
-
-int	ph_stat(t_philo *ph, int mod)
-{
-	pthread_mutex_lock(ph->data->m_philo);
-	if (ph->stat & (1 << mod))
+	ret = ph_islive(ph);
+	if (ret || (!ret && ((stat == P_DIE) || (stat == P_EATED))))
 	{
-		pthread_mutex_unlock(ph->data->m_philo);
-		return (1);
+		time = (ph_getinst(ph->data->start) / 1000);
+		printf("%ld %d %s\n", time, ph->nb, str[stat]);
 	}
-	pthread_mutex_unlock(ph->data->m_philo);
-	return (0);
 }
