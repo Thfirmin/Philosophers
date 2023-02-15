@@ -6,13 +6,15 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:32 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 13:16:58 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:11:28 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static int	ph_isvalid_arg(int argc, char *argv[]);
+
+static int	ph_pikanorabo(t_philo *ph, t_data *dt);
 
 static void	monitoring(t_philo *ph, t_data *dt);
 
@@ -41,24 +43,37 @@ int	main(int argc, char *argv[])
 static void	monitoring(t_philo *ph, t_data *dt)
 {
 	int	idx;
+	int	thawan_is_gay;
 
-	idx = 0;
-	while (1)
+	idx = -1;
+	thawan_is_gay = 1;
+	while (thawan_is_gay)
 	{
-		if (idx == dt->n_philo)
+		if (++idx == dt->n_philo)
 			idx = 0;
 		if (ph_rdph_stat(&ph[idx], P_DIE))
 		{
-			ph_wrdt(&ph[idx], &dt->sim, idx + 1, 0);
+			ph_wrdt(&ph[idx], &dt->sim, ph[idx].nb, 0);
 			ph_die(&ph[idx]);
 			break ;
 		}
-		else if (ph_rdph_stat(&ph[idx], P_EATED))
-		{
-			ph_wrdt(&ph[idx], &dt->sim, idx + 1, 0);
-			break ;
-		}
+		thawan_is_gay = ph_pikanorabo(ph, dt);
 	}
+}
+
+static int	ph_pikanorabo(t_philo *ph, t_data *dt)
+{
+	int	i;
+	int	eats;
+
+	eats = 0;
+	i = -1;
+	while (++i < dt->n_philo)
+		if (ph_rdph_stat(&ph[i], P_EATED))
+			eats ++;
+	if (eats == dt->n_philo)
+		return (0);
+	return (1);
 }
 
 static int	ph_isvalid_arg(int argc, char *argv[])

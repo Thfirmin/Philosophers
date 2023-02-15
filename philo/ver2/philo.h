@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:06:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 13:57:03 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:12:46 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int		ph_rddt(t_philo *ph, void *data, int cmp);
 // ph_rdwr_philo
 int		ph_rdph_stat(t_philo *ph, t_status flag);
 void	ph_wrph_stat(t_philo *ph, t_status flag, short mod);
-time_t	ph_rdph(t_philo *ph, void *data);
+int		ph_rdph(t_philo *ph, void *data);
 void	ph_wrph(t_philo *ph, void *data, int aux, short mod);
+time_t	ph_rdph_tlife(t_philo *ph);
 
 #endif

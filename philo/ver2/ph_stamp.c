@@ -6,11 +6,13 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 13:33:56 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:02:08 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	ph_validlog(t_philo *ph, t_status stat);
 
 time_t	ph_getinst(time_t start)
 {
@@ -35,7 +37,7 @@ void	ph_stamperr(char *message)
 void	ph_stamplog(t_philo *ph, t_status stat)
 {
 	time_t		time;
-	int			ret;
+	int			valid;
 	const char	*str[] = {
 		"has taken a fork",
 		"has taken a fork",
@@ -45,10 +47,31 @@ void	ph_stamplog(t_philo *ph, t_status stat)
 		"is died"
 	};
 
-	ret = ph_islive(ph);
-	if (ret || (!ret && ((stat == P_DIE) || (stat == P_EATED))))
+	valid = ph_validlog(ph, stat);
+	if (valid)
 	{
-		time = (ph_getinst(ph->data->start) / 1000);
-		printf("%ld %d %s\n", time, ph->nb, str[stat]);
+		pthread_mutex_lock(ph->data->m_philo);
+		if (ph_rddt(ph, &ph->data->sim, 0) || 
+			ph_rddt(ph, &ph->data->sim, ph->nb))
+		{
+			time = (ph_getinst(ph->data->start) / 1000);
+			printf("%ld %d %s\n", time, ph->nb, str[stat]);
+		}
+		pthread_mutex_unlock(ph->data->m_philo);
 	}
+}
+
+static int	ph_validlog(t_philo *ph, t_status stat)
+{
+	int	live;
+
+	live = ph_islive(ph);
+	if (live)
+		return (1);
+	else if (stat == P_EAT)
+		return (1);
+	else if ((stat == P_DIE) && (ph_rddt(ph, &ph->data->sim, ph->nb)))
+		return (1);
+	else
+		return (0);
 }
