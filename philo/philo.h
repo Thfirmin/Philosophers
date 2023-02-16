@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:06:54 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 20:28:09 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:03:41 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,26 @@ typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_data
 {
-	int					n_philo; // RD
-	time_t				t_die; // RD
-	time_t				t_eat; // RD
-	time_t				t_sleep; // RD
-	int					n_eat; // RD
-	time_t				start; // RD
-	int					sim; // RDWR
-	t_mutex				*m_data; // MTX
-	t_mutex				*m_philo; // MTX
-	t_mutex				**fork; // MTX
+	int					n_philo;
+	time_t				t_die;
+	time_t				t_eat;
+	time_t				t_sleep;
+	int					n_eat;
+	time_t				start;
+	int					sim;
+	t_mutex				*m_data;
+	t_mutex				*m_philo;
+	t_mutex				**fork;
 }						t_data;
 
 typedef struct s_philo
 {
-	pthread_t			id; // RD
-	int					nb; // RD
-	time_t				t_life; // RDWR
-	unsigned char		stat; // RDWR
-	int					n_eat; // RDWR
-	t_data				*data; // RDWR
+	pthread_t			id;
+	int					nb;
+	time_t				t_life;
+	unsigned char		stat;
+	int					n_eat;
+	t_data				*data;
 }						t_philo;
 
 // Enums
@@ -60,7 +60,6 @@ typedef enum e_status
 	P_EATED = 6,
 	T_THINK = 150,
 }	t_status;
-
 
 // ph_stamp
 time_t	ph_getinst(time_t start);

@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:32 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 20:11:28 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:08:14 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	ph_isvalid_arg(int argc, char *argv[])
 		return (0);
 	}
 	i = 0;
-	while(*(argv + ++i))
+	while (*(argv + ++i))
 	{
 		if (!ph_isposnumber(*(argv + i)))
 		{

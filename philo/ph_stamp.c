@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 20:02:08 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:10:21 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ph_validlog(t_philo *ph, t_status stat);
 
 time_t	ph_getinst(time_t start)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, 0);
 	return ((tv.tv_sec * 1000000 + tv.tv_usec) - start);
@@ -51,8 +51,8 @@ void	ph_stamplog(t_philo *ph, t_status stat)
 	if (valid)
 	{
 		pthread_mutex_lock(ph->data->m_philo);
-		if (ph_rddt(ph, &ph->data->sim, 0) || 
-			ph_rddt(ph, &ph->data->sim, ph->nb))
+		if (ph_rddt(ph, &ph->data->sim, 0)
+			|| ph_rddt(ph, &ph->data->sim, ph->nb))
 		{
 			time = (ph_getinst(ph->data->start) / 1000);
 			printf("%ld %d %s\n", time, ph->nb, str[stat]);

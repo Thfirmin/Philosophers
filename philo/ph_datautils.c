@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:44 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 13:48:31 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:04:04 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ph_checkdata(t_data *data)
 
 void	ph_cleandata(t_data **data)
 {
-	t_data *tmp;
+	t_data	*tmp;
 
 	tmp = *data;
 	if (!tmp)

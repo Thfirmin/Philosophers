@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:07 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 16:33:42 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/15 22:11:15 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,25 @@ t_philo	*ph_initphilo(t_data *data)
 	t_philo	*philo;
 
 	philo = malloc(data->n_philo * sizeof(t_philo));
-	if (philo)
+	if (!philo)
+		return (0);
+	memset(philo, 0, (data->n_philo * sizeof(t_philo)));
+	i = -1;
+	data->start = ph_getinst(0);
+	while (++i < data->n_philo)
 	{
-		memset(philo, 0, (data->n_philo * sizeof(t_philo)));
-		i = -1;
-		data->start = ph_getinst(0);
-		while (++i < data->n_philo)
-		{
-			(philo + i)->nb = (i + 1);
-			(philo + i)->data = data;
-			(philo + i)->stat = (1 << P_THINK);
-			(philo + i)->t_life = data->start;
-			if (pthread_create(&(philo + i)->id, 0, ph_routine, (philo + i)))
-				break ;
-		}
-		if (i != data->n_philo)
-		{
-			pthread_mutex_lock(data->m_data);
-			data->sim = 0;
-			pthread_mutex_unlock(data->m_data);
-		}
+		(philo + i)->nb = (i + 1);
+		(philo + i)->data = data;
+		(philo + i)->stat = (1 << P_THINK);
+		(philo + i)->t_life = data->start;
+		if (pthread_create(&(philo + i)->id, 0, ph_routine, (philo + i)))
+			break ;
+	}
+	if (i != data->n_philo)
+	{
+		pthread_mutex_lock(data->m_data);
+		data->sim = 0;
+		pthread_mutex_unlock(data->m_data);
 	}
 	return (philo);
 }
