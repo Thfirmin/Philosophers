@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:19 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 22:07:00 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:51:41 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*ph_routine(void *param)
 	t_philo	*philo;
 
 	philo = param;
+	if (!(philo->nb % 2))
+		usleep(250);
 	while (ph_islive(philo) || ph_rdph_stat(philo, P_FORK1))
 	{
 		ph_takeone_fork(philo);

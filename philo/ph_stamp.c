@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:16:49 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 22:10:21 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:45:02 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ph_stamplog(t_philo *ph, t_status stat)
 		"is eating",
 		"is sleeping",
 		"is thinking",
-		"is died"
+		"died"
 	};
 
 	valid = ph_validlog(ph, stat);

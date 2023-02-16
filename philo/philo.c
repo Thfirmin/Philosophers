@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:32 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/16 13:39:48 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/16 13:59:46 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	monitoring(t_philo *ph, t_data *dt)
 			break ;
 		}
 		eats = ph_eat_count(ph, dt);
+		usleep(1000);
 	}
 }
 
