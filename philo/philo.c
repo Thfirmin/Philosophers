@@ -6,7 +6,7 @@
 /*   By: thfirmin <thfirmin@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 01:15:32 by thfirmin          #+#    #+#             */
-/*   Updated: 2023/02/15 22:08:14 by thfirmin         ###   ########.fr       */
+/*   Updated: 2023/02/16 13:39:48 by thfirmin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ph_isvalid_arg(int argc, char *argv[]);
 
-static int	ph_pikanorabo(t_philo *ph, t_data *dt);
+static int	ph_eat_count(t_philo *ph, t_data *dt);
 
 static void	monitoring(t_philo *ph, t_data *dt);
 
@@ -42,26 +42,30 @@ int	main(int argc, char *argv[])
 
 static void	monitoring(t_philo *ph, t_data *dt)
 {
-	int	idx;
-	int	thawan_is_gay;
+	int		idx;
+	int		eats;
+	time_t	instant;
 
 	idx = -1;
-	thawan_is_gay = 1;
-	while (thawan_is_gay)
+	eats = 1;
+	while (eats)
 	{
 		if (++idx == dt->n_philo)
 			idx = 0;
+		instant = ph_getinst(0);
+		if ((instant - ph_rdph_tlife(&ph[idx])) >= dt->t_die)
+			ph_wrph_stat(&ph[idx], P_DIE, 1);
 		if (ph_rdph_stat(&ph[idx], P_DIE))
 		{
 			ph_wrdt(&ph[idx], &dt->sim, ph[idx].nb, 0);
 			ph_die(&ph[idx]);
 			break ;
 		}
-		thawan_is_gay = ph_pikanorabo(ph, dt);
+		eats = ph_eat_count(ph, dt);
 	}
 }
 
-static int	ph_pikanorabo(t_philo *ph, t_data *dt)
+static int	ph_eat_count(t_philo *ph, t_data *dt)
 {
 	int	i;
 	int	eats;
